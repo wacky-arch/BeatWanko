@@ -82,24 +82,26 @@ body {
   margin-bottom: 6px;
 }
 
-.brand-badge,
-.demo-pill {
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
   font-weight: 600;
   padding: 3px 10px;
   border-radius: 999px;
-}
-
-.brand-badge {
   background: rgba(56, 189, 248, 0.14);
   color: var(--accent);
   border: 1px solid rgba(56, 189, 248, 0.35);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
 }
 
-.demo-pill {
-  background: rgba(251, 191, 36, 0.16);
-  color: var(--gold);
-  border: 1px solid rgba(251, 191, 36, 0.4);
+.brand-badge:hover {
+  background: rgba(56, 189, 248, 0.24);
+  border-color: rgba(56, 189, 248, 0.7);
+  transform: translateY(-1px);
 }
 
 h1 {
@@ -112,12 +114,6 @@ h1 {
   margin: 6px 0 0;
   color: var(--muted);
   font-size: 13.5px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
 }
 
 .btn {

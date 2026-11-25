@@ -1,7 +1,7 @@
 (() => {
   const MODE_RULES = {
     unconditional: '☠️ 無条件ランキング：フィルタなしの完全ランダム抽選（全モディファイア OFF 固定・Fail で終了）',
-    stepup: '⭐️ SS⭐️ステップアップ：ScoreSaber ★0.00〜1.99〜★14台へ1曲ずつ昇格（全モディファイア OFF 固定・14曲完走で終了）',
+    stepup: '⭐️ SS⭐️ステップアップ：ScoreSaber ★0.00〜1.99〜★14台へ1曲ずつ昇格（全モディファイア OFF 固定・Fail または 14曲完走で終了）',
     endurance: '💪 耐久ランキング：NPS 8.0 以下のみ出題＋曲中ポーズ完全禁止（全モディファイア OFF 固定・Fail で終了）',
   };
 
@@ -11,108 +11,12 @@
     endurance: '耐久ランキング',
   };
 
-  const DEMO_RUNS = {
-    unconditional: {
-      entries: [
-        {
-          run_id: 101,
-          rank: 1,
-          player_id: '76561198000000001',
-          display_name: 'PlayerA (Demo)',
-          avatar_url: '',
-          profile_source: 'scoresaber',
-          profile_url: '',
-          mode: 'unconditional',
-          played_at: '2026-11-22T20:10:00Z',
-          total_play_seconds: 1245,
-          end_reason: 'fail',
-          cleared_count: 8,
-          total_score: 7124890,
-          run_count: 3,
-          songs: [
-            { song_order: 1, song_hash: '2FDDB', song_name: 'Moonlit / seatrus', difficulty: 'Expert', characteristic: 'Standard', score: 942110, accuracy_percent: 96.2, cleared: 1, stars: 5.81, step_band: 0 },
-            { song_order: 2, song_hash: '1AABB', song_name: 'Sample Track #2', difficulty: 'ExpertPlus', characteristic: 'Standard', score: 1088400, accuracy_percent: 93.8, cleared: 1, stars: 8.42, step_band: 0 },
-            { song_order: 3, song_hash: '3CCDD', song_name: 'Boss Map (Failed)', difficulty: 'ExpertPlus', characteristic: 'Standard', score: 312000, accuracy_percent: 78.4, cleared: 0, stars: 11.2, step_band: 0 },
-          ],
-        },
-        {
-          run_id: 102,
-          rank: 2,
-          player_id: '76561198000000002',
-          display_name: 'PlayerB (Demo)',
-          avatar_url: '',
-          profile_source: 'beatleader',
-          profile_url: '',
-          mode: 'unconditional',
-          played_at: '2026-11-22T19:45:00Z',
-          total_play_seconds: 980,
-          end_reason: 'close_lid',
-          cleared_count: 6,
-          total_score: 5412300,
-          run_count: 1,
-          songs: [
-            { song_order: 1, song_hash: '4EEFF', song_name: 'Demo Clear #1', difficulty: 'Hard', characteristic: 'Standard', score: 780100, accuracy_percent: 94.5, cleared: 1, stars: 3.9, step_band: 0 },
-          ],
-        },
-      ],
-    },
-    stepup: {
-      entries: [
-        {
-          run_id: 201,
-          rank: 1,
-          player_id: '76561198000000001',
-          display_name: 'PlayerA (Demo)',
-          avatar_url: '',
-          profile_source: 'scoresaber',
-          profile_url: '',
-          mode: 'stepup',
-          played_at: '2026-11-22T20:25:00Z',
-          total_play_seconds: 2130,
-          end_reason: 'complete',
-          cleared_count: 14,
-          total_score: 12940500,
-          run_count: 2,
-          songs: [
-            { song_order: 1, song_hash: 'AA111', song_name: 'Step 1 Map', difficulty: 'Normal', characteristic: 'Standard', score: 520100, accuracy_percent: 98.1, cleared: 1, stars: 1.45, step_band: 1 },
-            { song_order: 2, song_hash: 'BB222', song_name: 'Step 14 Final Boss', difficulty: 'ExpertPlus', characteristic: 'Standard', score: 1340500, accuracy_percent: 87.3, cleared: 1, stars: 14.32, step_band: 14 },
-          ],
-        },
-      ],
-    },
-    endurance: {
-      entries: [
-        {
-          run_id: 301,
-          rank: 1,
-          player_id: '76561198000000002',
-          display_name: 'PlayerB (Demo)',
-          avatar_url: '',
-          profile_source: 'beatleader',
-          profile_url: '',
-          mode: 'endurance',
-          played_at: '2026-11-22T18:30:00Z',
-          total_play_seconds: 3840,
-          end_reason: 'fail',
-          cleared_count: 18,
-          total_score: 15820400,
-          run_count: 1,
-          songs: [
-            { song_order: 1, song_hash: 'CC333', song_name: 'Endurance Groove #1', difficulty: 'Expert', characteristic: 'Standard', score: 891200, accuracy_percent: 95.6, cleared: 1, stars: 0, step_band: 0 },
-            { song_order: 2, song_hash: 'DD444', song_name: 'Endurance Final (Failed)', difficulty: 'Expert', characteristic: 'Standard', score: 410000, accuracy_percent: 81.2, cleared: 0, stars: 0, step_band: 0 },
-          ],
-        },
-      ],
-    },
-  };
-
   const urlParams = new URLSearchParams(window.location.search);
   const configuredApi = (urlParams.get('api') || window.BEATWANKO_CONFIG?.API_BASE_URL || '').trim().replace(/\/+$/, '');
 
   let currentMode = ['unconditional', 'stepup', 'endurance'].includes(urlParams.get('mode'))
     ? urlParams.get('mode')
     : 'unconditional';
-  let useDemo = urlParams.get('demo') === '1' || !configuredApi;
   let activeRunForDownload = null;
 
   const els = {
@@ -121,9 +25,6 @@
     statPlayers: document.getElementById('stat-players'),
     statTopCups: document.getElementById('stat-top-cups'),
     statusBox: document.getElementById('status-box'),
-    demoPill: document.getElementById('demo-pill'),
-    btnToggleDemo: document.getElementById('btn-toggle-demo'),
-    btnRefresh: document.getElementById('btn-refresh'),
     runModal: document.getElementById('run-modal'),
     runModalTitle: document.getElementById('run-modal-title'),
     runModalSub: document.getElementById('run-modal-sub'),
@@ -197,9 +98,6 @@
       btn.classList.toggle('active', btn.dataset.mode === currentMode);
     });
     els.ruleText.textContent = MODE_RULES[currentMode] || '';
-    els.demoPill.classList.toggle('hidden', !useDemo);
-    els.btnToggleDemo.classList.toggle('hidden', !configuredApi);
-    els.btnToggleDemo.textContent = useDemo ? '本番APIに戻る' : 'サンプルデータで確認';
   }
 
   async function fetchJson(path) {
@@ -264,13 +162,9 @@
     syncUiHeader();
     els.body.innerHTML = '<tr><td colspan="7" class="empty-cell">読み込み中...</td></tr>';
 
-    if (useDemo) {
-      if (!configuredApi) {
-        setStatus('API URL 未設定のためサンプルデータを表示しています（Cloudflare Workers デプロイ後に pages/config.js の API_BASE_URL を設定してください）。');
-      } else {
-        setStatus('');
-      }
-      renderLeaderboard(DEMO_RUNS[currentMode]?.entries || []);
+    if (!configuredApi) {
+      setStatus('API URL が設定されていません。');
+      els.body.innerHTML = '<tr><td colspan="7" class="empty-cell">データを読み込めませんでした。</td></tr>';
       return;
     }
 
@@ -282,14 +176,6 @@
       setStatus(`ランキングの取得に失敗しました（${err.message}）。`);
       els.body.innerHTML = '<tr><td colspan="7" class="empty-cell">データを読み込めませんでした。</td></tr>';
     }
-  }
-
-  function findDemoRunById(runId) {
-    for (const mode of Object.keys(DEMO_RUNS)) {
-      const hit = DEMO_RUNS[mode].entries.find((e) => Number(e.run_id) === Number(runId));
-      if (hit) return hit;
-    }
-    return null;
   }
 
   function openModal(id) {
@@ -306,18 +192,13 @@
 
     let run;
     let songs;
-    if (useDemo) {
-      run = findDemoRunById(runId);
-      songs = run?.songs || [];
-    } else {
-      try {
-        const res = await fetchJson(`/api/runs/${encodeURIComponent(runId)}`);
-        run = res.run;
-        songs = res.songs || [];
-      } catch (err) {
-        els.runSongsBody.innerHTML = `<tr><td colspan="7" class="empty-cell">取得失敗：${escapeHtml(err.message)}</td></tr>`;
-        return;
-      }
+    try {
+      const res = await fetchJson(`/api/runs/${encodeURIComponent(runId)}`);
+      run = res.run;
+      songs = res.songs || [];
+    } catch (err) {
+      els.runSongsBody.innerHTML = `<tr><td colspan="7" class="empty-cell">取得失敗：${escapeHtml(err.message)}</td></tr>`;
+      return;
     }
 
     if (!run) {
@@ -362,16 +243,12 @@
     els.historyList.innerHTML = '<div class="empty-cell">読み込み中...</div>';
 
     let runs;
-    if (useDemo) {
-      runs = (DEMO_RUNS[currentMode]?.entries || []).filter((e) => e.player_id === playerId);
-    } else {
-      try {
-        const res = await fetchJson(`/api/players/${encodeURIComponent(playerId)}/runs?mode=${encodeURIComponent(currentMode)}&limit=50`);
-        runs = res.runs || [];
-      } catch (err) {
-        els.historyList.innerHTML = `<div class="empty-cell">取得失敗：${escapeHtml(err.message)}</div>`;
-        return;
-      }
+    try {
+      const res = await fetchJson(`/api/players/${encodeURIComponent(playerId)}/runs?mode=${encodeURIComponent(currentMode)}&limit=50`);
+      runs = res.runs || [];
+    } catch (err) {
+      els.historyList.innerHTML = `<div class="empty-cell">取得失敗：${escapeHtml(err.message)}</div>`;
+      return;
     }
 
     if (!runs.length) {
@@ -397,38 +274,9 @@
   }
 
   function downloadActivePlaylist() {
-    if (!activeRunForDownload) return;
-    const { run, songs } = activeRunForDownload;
-    if (!useDemo && configuredApi) {
-      window.location.href = `${configuredApi}/api/runs/${encodeURIComponent(run.id || run.run_id)}/playlist.bplist`;
-      return;
-    }
-    const seen = new Set();
-    const bplistSongs = [];
-    for (const s of songs) {
-      const hash = String(s.song_hash || '').toUpperCase();
-      if (!hash || seen.has(hash)) continue;
-      seen.add(hash);
-      bplistSongs.push({
-        hash,
-        songName: s.song_name,
-        difficulties: [{ characteristic: s.characteristic || 'Standard', name: s.difficulty }],
-      });
-    }
-    const payload = {
-      playlistTitle: `BeatWanko [${MODE_LABELS[run.mode] || run.mode}] - ${run.display_name} (${run.cleared_count}杯)`,
-      playlistAuthor: 'BeatWanko Leaderboard',
-      playlistDescription: `Played on ${run.played_at} | Cleared: ${run.cleared_count} | Total Score: ${run.total_score}`,
-      songs: bplistSongs,
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/octet-stream' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `beatwanko_${run.mode}_run${run.id || run.run_id}.bplist`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    if (!activeRunForDownload || !configuredApi) return;
+    const { run } = activeRunForDownload;
+    window.location.href = `${configuredApi}/api/runs/${encodeURIComponent(run.id || run.run_id)}/playlist.bplist`;
   }
 
   document.querySelectorAll('.tab-btn').forEach((btn) => {
@@ -438,11 +286,6 @@
     });
   });
 
-  els.btnRefresh.addEventListener('click', loadLeaderboard);
-  els.btnToggleDemo.addEventListener('click', () => {
-    useDemo = !useDemo;
-    loadLeaderboard();
-  });
   els.btnDownloadBplist.addEventListener('click', downloadActivePlaylist);
 
   document.addEventListener('click', (ev) => {
