@@ -1,0 +1,19 @@
+# Build outputs & IDE files
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.dll
+*.pdb
+*.zip
+
+# Secrets & local configs
+.env
+.dev.vars
+*secret*
+ADMIN_COMMANDS.md
+
+# Node / Wrangler
+node_modules/
+.wrangler/

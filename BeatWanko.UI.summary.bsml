@@ -1,0 +1,12 @@
+<vertical pref-width="114" pref-height="71" spacing="0.7" pad-top="1" pad-bottom="1" child-control-height="true" child-expand-height="false" child-control-width="true" child-expand-width="false" child-align="UpperCenter">
+  <text id="summary-header" text="〜 お会計 〜" font-size="3.6" align="Center" />
+  <text id="summary-title" text="" font-size="4.2" align="Center" word-wrapping="false" />
+  <text id="summary-stats" text="" font-size="2.9" align="Center" />
+  <scroll-view id="history-scroll" pref-width="108" min-height="32.5" pref-height="32.5">
+    <vertical id="history-container" pref-width="96" spacing="0.8" pad-top="1" pad-bottom="1" horizontal-fit="Unconstrained" vertical-fit="Unconstrained" child-control-height="true" child-expand-height="false" child-control-width="true" child-expand-width="false" child-align="UpperLeft" />
+  </scroll-view>
+  <text id="summary-note" text="" font-size="2.9" align="Center" word-wrapping="false" />
+  <horizontal spacing="3" pref-width="110" min-height="6.5" pref-height="6.5" child-align="MiddleCenter" child-expand-width="false" child-expand-height="false">
+    <button text="閉じる" on-click="close-summary" pref-width="26" min-height="6.0" pref-height="6.0" />
+  </horizontal>
+</vertical>

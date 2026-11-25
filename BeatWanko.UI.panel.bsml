@@ -1,0 +1,7 @@
+<vertical pref-width="112" pref-height="60" spacing="3">
+  <text id="mode-title" text="🍜 わんこそばチャレンジ" font-size="5.2" align="Center" />
+  <text id="song-text" text="" font-size="4" align="Center" />
+  <text id="status-text" text="" font-size="4" align="Center" />
+  <text id="count-text" text="" font-size="4.6" align="Center" />
+  <button text="蓋を閉じる" on-click="close-lid" pref-width="36" pref-height="8" />
+</vertical>

@@ -1,0 +1,34 @@
+<scrollable-settings-container spacing="0.8" pad-top="1" pad-bottom="2">
+  <horizontal pref-width="90" pref-height="5.5" vertical-fit="PreferredSize" child-align="MiddleCenter">
+    <text text="BeatWanko（わんこそばチャレンジ）v1.1.6" font-size="4.3" align="Center" />
+  </horizontal>
+  <horizontal spacing="2" pref-height="7.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize">
+    <button text="▶ ノーマル開始" on-click="start-normal" pref-width="42" pref-height="7.5" hover-hint="下のフィルタ設定でフリープレイ（ランキング不参加）" />
+    <button text="☠️ 無条件ランキング" on-click="start-unconditional" pref-width="42" pref-height="7.5" hover-hint="フィルタ無しの完全ランダム（全モディファイアOFF・Fail終了）" />
+  </horizontal>
+  <horizontal spacing="2" pref-height="7.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize">
+    <button text="⭐️ SSステップアップ" on-click="start-stepup" pref-width="42" pref-height="7.5" hover-hint="ScoreSaber ★0.00〜1.99（1曲目）〜★14台を順番に14曲クリアで完走（全モディファイアOFF）" />
+    <button text="💪 耐久ランキング" on-click="start-endurance" pref-width="42" pref-height="7.5" hover-hint="NPS 8.0以下のみ・曲中ポーズ完全禁止（全モディファイアOFF・Fail終了）" />
+  </horizontal>
+  <horizontal spacing="2" pref-height="6.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize">
+    <button text="🌐 Webランキングを見る" on-click="open-ranking-web" pref-width="46" pref-height="6.5" hover-hint="ブラウザでBeatWankoオンラインランキング（Webページ）を開きます" />
+  </horizontal>
+  <horizontal id="start-status-row" pref-width="90" pref-height="4.5" vertical-fit="PreferredSize" child-align="MiddleCenter">
+    <text id="start-status" text="" font-size="3.2" align="Center" overflow-mode="Ellipsis" word-wrapping="false" />
+  </horizontal>
+  <bool-setting text="ランキング結果を自動送信する" value="enable-ranking-submission" apply-on-change="true" hover-hint="無条件 / ステップアップ / 耐久の結果をオンラインリーダーボードへ送信します" />
+  <increment-setting text="曲間インターバル（秒）" value="interval-seconds" min="0" max="60" increment="1" integer-only="true" show-buttons="true" apply-on-change="true" hover-hint="次の曲が始まるまでの休憩時間（デフォルト5秒）" />
+  <increment-setting text="DLタイムアウト（秒）" value="download-timeout" min="5" max="120" increment="1" integer-only="true" show-buttons="true" apply-on-change="true" hover-hint="インターバル後、ダウンロード完了を待つ上限（デフォルト15秒）。超えたら強制キャンセルして別の曲を抽選します" />
+  <horizontal pref-width="90" pref-height="4.5" vertical-fit="PreferredSize" child-align="MiddleCenter">
+    <text text="─── ノーマル専用フィルタ設定（ランキング3モードでは無効） ───" font-size="3.0" color="#BBBBBB" align="Center" />
+  </horizontal>
+  <bool-setting text="Failしても次の曲へ（ノーマル専用・練習モード）" value="continue-on-fail" apply-on-change="true" hover-hint="オフ：Failでチャレンジ終了／オン：止めずに次の曲へ（※ランキング時は常にFail終了）" />
+  <dropdown-list-setting text="抽選する難易度の下限" value="min-difficulty" options="difficulty-options" apply-on-change="true" />
+  <dropdown-list-setting text="抽選する難易度の上限" value="max-difficulty" options="difficulty-options" apply-on-change="true" />
+  <increment-setting text="★下限（0 = 制限なし）" value="min-stars" min="0" max="15" increment="0.5" show-buttons="true" apply-on-change="true" hover-hint="ScoreSaberの★（ランク譜面のみが対象になります）" />
+  <increment-setting text="★上限（0 = 制限なし）" value="max-stars" min="0" max="15" increment="0.5" show-buttons="true" apply-on-change="true" />
+  <increment-setting text="NPS 下限（0 = 制限なし）" value="min-nps" min="0" max="15" increment="0.5" show-buttons="true" apply-on-change="true" hover-hint="1秒あたりのノーツ数" />
+  <increment-setting text="NPS 上限（0 = 制限なし）" value="max-nps" min="0" max="15" increment="0.5" show-buttons="true" apply-on-change="true" />
+  <increment-setting text="曲長 下限・秒（0 = 制限なし）" value="min-length" min="0" max="900" increment="10" integer-only="true" show-buttons="true" apply-on-change="true" />
+  <increment-setting text="曲長 上限・秒（0 = 制限なし）" value="max-length" min="0" max="900" increment="10" integer-only="true" show-buttons="true" apply-on-change="true" />
+</scrollable-settings-container>

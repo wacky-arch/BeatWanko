@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+  "id": "BeatWanko",
+  "name": "BeatWanko",
+  "author": "wacky",
+  "version": "1.1.7",
+  "description": "わんこそば式エンドレスMOD：4モード（ノーマル / 無条件☠️ / SS⭐️ステップアップ / 耐久💪）＋オンラインランキング連携。",
+  "gameVersion": "1.40.8",
+  "dependsOn": {
+    "BSIPA": "^4.3.0"
+  },
+  "features": []
+}

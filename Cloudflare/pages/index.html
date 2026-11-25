@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeatWanko Leaderboard - わんこそばチャレンジ ランキング</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-left"></div>
+  <div class="bg-glow bg-glow-right"></div>
+
+  <header class="hero">
+    <div class="container hero-inner">
+      <div>
+        <div class="brand-row">
+          <span class="brand-badge">Beat Saber 1.40.8 &amp; 1.44.1 / Mod v1.1.6</span>
+          <span id="demo-pill" class="demo-pill hidden">デモ表示中（サンプルデータ）</span>
+        </div>
+        <h1>🍜 BeatWanko リーダーボード</h1>
+        <p class="subtitle">
+          全モディファイア OFF 固定・素スコア（multipliedScore）勝負 ／ 順位：クリア曲数 → 合計スコア ／ 各プレイヤーの自己ベストを表示
+        </p>
+      </div>
+      <div class="hero-actions">
+        <button id="btn-toggle-demo" class="btn btn-secondary" type="button">サンプルデータで確認</button>
+        <button id="btn-refresh" class="btn btn-primary" type="button">↻ 更新</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <nav class="mode-tabs" aria-label="ランキングモード切替">
+      <button class="tab-btn active" data-mode="unconditional" type="button">
+        <span class="tab-icon">☠️</span>
+        <span>無条件ランキング</span>
+      </button>
+      <button class="tab-btn" data-mode="stepup" type="button">
+        <span class="tab-icon">⭐️</span>
+        <span>SSステップアップ (★0〜1→14)</span>
+      </button>
+      <button class="tab-btn" data-mode="endurance" type="button">
+        <span class="tab-icon">💪</span>
+        <span>耐久ランキング (NPS≦8・ポーズ禁止)</span>
+      </button>
+    </nav>
+
+    <section class="mode-banner">
+      <div id="mode-rule-text" class="rule-text"></div>
+      <div class="stats-pills">
+        <span class="stat-pill">参加者：<strong id="stat-players">-</strong>人</span>
+        <span class="stat-pill">最高記録：<strong id="stat-top-cups">-</strong>杯</span>
+      </div>
+    </section>
+
+    <section id="status-box" class="status-box hidden"></section>
+
+    <section class="board-card">
+      <div class="table-wrap">
+        <table class="board-table">
+          <thead>
+            <tr>
+              <th class="col-rank">#</th>
+              <th class="col-player">プレイヤー</th>
+              <th class="col-cups">クリア曲数</th>
+              <th class="col-score">合計スコア</th>
+              <th class="col-time">プレイ時間</th>
+              <th class="col-date">達成日時</th>
+              <th class="col-actions">詳細・DL</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body">
+            <tr>
+              <td colspan="7" class="empty-cell">読み込み中...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Run Detail Modal -->
+  <div id="run-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="run-modal-title">
+    <div class="modal-backdrop" data-close-modal="run-modal"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <h2 id="run-modal-title">ラン詳細</h2>
+          <p id="run-modal-sub" class="modal-sub"></p>
+        </div>
+        <div class="modal-header-actions">
+          <button id="btn-download-bplist" class="btn btn-primary" type="button">⬇ .bplist ダウンロード</button>
+          <button class="btn btn-icon" type="button" data-close-modal="run-modal" aria-label="閉じる">✕</button>
+        </div>
+      </div>
+      <div id="run-summary-bar" class="run-summary-bar"></div>
+      <div class="modal-body">
+        <table class="songs-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>曲名</th>
+              <th>難易度</th>
+              <th>★</th>
+              <th>スコア</th>
+              <th>精度</th>
+              <th>結果</th>
+            </tr>
+          </thead>
+          <tbody id="run-songs-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Player History Modal -->
+  <div id="history-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="history-modal-title">
+    <div class="modal-backdrop" data-close-modal="history-modal"></div>
+    <div class="modal-panel modal-panel-narrow">
+      <div class="modal-header">
+        <div>
+          <h2 id="history-modal-title">過去の全ラン履歴</h2>
+          <p id="history-modal-sub" class="modal-sub"></p>
+        </div>
+        <button class="btn btn-icon" type="button" data-close-modal="history-modal" aria-label="閉じる">✕</button>
+      </div>
+      <div id="history-list" class="modal-body history-list"></div>
+    </div>
+  </div>
+
+  <footer class="footer container">
+    <span>BeatWanko Leaderboard • Beat Saber Custom Mod</span>
+  </footer>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

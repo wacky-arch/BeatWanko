@@ -1,0 +1,9 @@
+name = "beatwanko-api"
+main = "worker/src/index.js"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "beatwanko-db"
+database_id = "bd8e16e4-9fb2-4af5-aa50-1f9ba89c20fb"
+migrations_dir = "migrations"
