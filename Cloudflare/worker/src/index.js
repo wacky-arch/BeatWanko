@@ -1,3 +1,4 @@
+const API_VERSION = '1.1.7';
 const VALID_MODES = new Set(['unconditional', 'stepup', 'endurance']);
 const VALID_END_REASONS = new Set(['fail', 'close_lid', 'complete']);
 const PROFILE_TTL_MS = 6 * 60 * 60 * 1000;
@@ -78,7 +79,7 @@ async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'BeatWanko-Leaderboard/1.1.6 (+https://github.com/wacky-arch/BeatWanko)',
+        'User-Agent': `BeatWanko-Leaderboard/${API_VERSION} (+https://github.com/wacky-arch/BeatWanko)`,
         Accept: 'application/json',
       },
     });
@@ -221,7 +222,7 @@ function validateAndNormalizePayload(body) {
   }
   const totalPlaySeconds = Math.round(rawTotalPlaySeconds * 100) / 100;
   const platformUserName = String(body.platform_user_name || '').trim().slice(0, 64);
-  const modVersion = String(body.mod_version || '1.1.6').trim().slice(0, 24);
+  const modVersion = String(body.mod_version || API_VERSION).trim().slice(0, 24);
   const gameVersion = String(body.game_version || '1.40.8').trim().slice(0, 24);
 
   const songs = [];
@@ -881,7 +882,7 @@ export default {
     try {
       if (request.method === 'GET' && path === '/api/health') {
         await env.DB.prepare('SELECT 1').first();
-        return jsonResponse({ ok: true, service: 'beatwanko-api', version: '1.1.6' });
+        return jsonResponse({ ok: true, service: 'beatwanko-api', version: API_VERSION });
       }
 
       if (path.startsWith('/api/admin/')) {

@@ -1,13 +1,13 @@
 <scrollable-settings-container spacing="0.8" pad-top="1" pad-bottom="2">
   <horizontal pref-width="90" pref-height="5.5" vertical-fit="PreferredSize" child-align="MiddleCenter">
-    <text text="BeatWanko（わんこそばチャレンジ）v1.1.6" font-size="4.3" align="Center" />
+    <text id="header-title" text="BeatWanko（わんこそばチャレンジ）v1.1.7" font-size="4.3" align="Center" />
   </horizontal>
   <horizontal spacing="2" pref-height="7.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize">
     <button text="▶ ノーマル開始" on-click="start-normal" pref-width="42" pref-height="7.5" hover-hint="下のフィルタ設定でフリープレイ（ランキング不参加）" />
     <button text="☠️ 無条件ランキング" on-click="start-unconditional" pref-width="42" pref-height="7.5" hover-hint="フィルタ無しの完全ランダム（全モディファイアOFF・Fail終了）" />
   </horizontal>
   <horizontal spacing="2" pref-height="7.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize">
-    <button text="⭐️ SSステップアップ" on-click="start-stepup" pref-width="42" pref-height="7.5" hover-hint="ScoreSaber ★0.00〜1.99（1曲目）〜★14台を順番に14曲クリアで完走（全モディファイアOFF）" />
+    <button text="⭐️ SSステップアップ" on-click="start-stepup" pref-width="42" pref-height="7.5" hover-hint="ScoreSaber ★0.00〜1.99（1曲目）〜★14台を順番に攻略（全モディファイアOFF・Failまたは14曲完走で終了）" />
     <button text="💪 耐久ランキング" on-click="start-endurance" pref-width="42" pref-height="7.5" hover-hint="NPS 8.0以下のみ・曲中ポーズ完全禁止（全モディファイアOFF・Fail終了）" />
   </horizontal>
   <horizontal spacing="2" pref-height="6.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize">

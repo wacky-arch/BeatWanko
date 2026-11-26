@@ -27,6 +27,9 @@ internal sealed class SettingsHost
 		}
 	}
 
+	[UIComponent("header-title")]
+	public TextMeshProUGUI HeaderTitleText;
+
 	[UIObject("start-status-row")]
 	public GameObject StartStatusRow;
 
@@ -38,6 +41,10 @@ internal sealed class SettingsHost
 	{
 		try
 		{
+			if (HeaderTitleText != null)
+			{
+				HeaderTitleText.text = "BeatWanko（わんこそばチャレンジ）v" + LeaderboardClient.ModVersion;
+			}
 			bool hasStatus = StartStatusText != null && !string.IsNullOrEmpty(StartStatusText.text);
 			if (StartStatusRow != null)
 			{

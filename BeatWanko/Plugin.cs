@@ -53,7 +53,7 @@ public class Plugin
 			int num2 = PausePatch.ApplyPatches(_harmony);
 			if (num > 0)
 			{
-				Log?.Info($"BeatWanko enabled (build v1.1.7, ranking spec). MenuTransitionsHelper patches applied: {num}, PauseMenuManager/PauseController patches applied: {num2}.");
+				Log?.Info($"BeatWanko enabled (build v{LeaderboardClient.ModVersion}, ranking spec). MenuTransitionsHelper patches applied: {num}, PauseMenuManager/PauseController patches applied: {num2}.");
 			}
 			else
 			{
